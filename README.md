@@ -1,0 +1,1 @@
+# A secure and user friendly password manager [WIP]
