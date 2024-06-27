@@ -10,6 +10,10 @@ activityCompose = "1.9.0"
 composeBom = "2024.06.00"
 # Added
 materialIconsExtendedAndroid = "1.6.8"
+ktxSerializationJson = "1.6.3"
+koinBom = "3.6.0-Beta4"
+ksp = "2.0.0-1.0.22"
+roomRuntime = "2.6.1"
 
 
 
@@ -30,10 +34,21 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 # Added
 androidx-material-icons-extended-android = { module = "androidx.compose.material:material-icons-extended-android", version.ref = "materialIconsExtendedAndroid" }
-
-
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "ktxSerializationJson" }
+koin-bom = { module = "io.insert-koin:koin-bom", name = "koin-bom", version.ref = "koinBom" }
+koin-android = { module = "io.insert-koin:koin-android", name = "koin-android" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", name = "koin-compose" }
+koin-core = { module = "io.insert-koin:koin-core", name = "koin-core" }
+koin-core-coroutines = { module = "io.insert-koin:koin-core-coroutines", name = "koin-coroutines" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+# Added
+jetbrains-kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+roomDb = { id = "androidx.room", version.ref = "roomRuntime" }
