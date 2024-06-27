@@ -1,4 +1,4 @@
-package com.akv.cypherx.ui.theme
+package com.akv.cypherx.theme
 
 import androidx.compose.ui.graphics.Color
 

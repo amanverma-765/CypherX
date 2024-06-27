@@ -1,4 +1,4 @@
-package com.akv.cypherx.ui.theme
+package com.akv.cypherx.theme
 
 import android.app.Activity
 import android.os.Build
