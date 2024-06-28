@@ -5,10 +5,10 @@ import com.akv.cypherx.domain.repository.AccountsRepository
 import com.akv.cypherx.utils.ApiResponse
 import kotlinx.coroutines.flow.Flow
 
-class UpdateAccount(
+class GetAccountById(
     private val accountsRepository: AccountsRepository
 ) {
-    operator fun invoke(accountData: AccountData): Flow<ApiResponse<Unit>> {
-        return accountsRepository.updateAccount(accountData)
+    operator fun invoke(accountId: Int): Flow<ApiResponse<AccountData>> {
+        return accountsRepository.getAccountById(accountId)
     }
 }

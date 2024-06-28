@@ -89,4 +89,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 
+    implementation(libs.voyager.bottom.sheet.navigator)
+    implementation(libs.androidx.biometric.ktx)
+
 }

@@ -16,7 +16,7 @@ object AccountsDataMapper {
 
     fun AccountData.toAccountEntity(): AccountEntity {
         return AccountEntity(
-            id = id,
+            id = id ?: 0,
             accountName = accountName,
             accountUsername = accountUsername,
             accountPassword = accountPassword

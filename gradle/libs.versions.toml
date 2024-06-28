@@ -3,8 +3,8 @@ agp = "8.5.0"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
-junitVersion = "1.2.0"
-espressoCore = "3.6.0"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.2"
 activityCompose = "1.9.0"
 composeBom = "2024.06.00"
@@ -14,7 +14,8 @@ ktxSerializationJson = "1.6.3"
 koinBom = "3.6.0-Beta4"
 ksp = "2.0.0-1.0.22"
 roomRuntime = "2.6.1"
-
+voyagerBottomSheetNavigator = "1.1.0-beta02"
+biometricKtx = "1.1.0"
 
 
 [libraries]
@@ -43,6 +44,10 @@ koin-core-coroutines = { module = "io.insert-koin:koin-core-coroutines", name = 
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+voyager-bottom-sheet-navigator = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyagerBottomSheetNavigator" }
+androidx-biometric-ktx = { module = "androidx.biometric:biometric", version.ref = "biometricKtx" }
+
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class AddNewAccount(
     private val accountsRepository: AccountsRepository
 ) {
-    suspend operator fun invoke(accountData: AccountData): Flow<ApiResponse<Unit>> {
+    operator fun invoke(accountData: AccountData): Flow<ApiResponse<Unit>> {
         return accountsRepository.addNewAccount(accountData)
     }
 }

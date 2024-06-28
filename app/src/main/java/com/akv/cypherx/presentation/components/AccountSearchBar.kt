@@ -1,12 +1,13 @@
 package com.akv.cypherx.presentation.components
 
-import android.content.ContentValues.TAG
-import android.util.Log
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,22 +21,35 @@ import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AccountSearchBar(modifier: Modifier = Modifier) {
+fun AccountSearchBar(
+    modifier: Modifier = Modifier,
+    query: String,
+    onQueryChange: (String) -> Unit,
+) {
 
     SearchBar(
-        query = "",
-        onQueryChange = {},
-        onSearch = {},
+        query = query,
+        onQueryChange = onQueryChange,
+        onSearch = { },
         active = false,
-        onActiveChange = { state ->
-            Log.e(TAG, "AccountSearchBar: $state")
-        },
+        onActiveChange = { },
         trailingIcon = {
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Filled.FilterList,
-                    contentDescription = "More"
-                )
+            Row(modifier = Modifier.animateContentSize()) {
+                IconButton(onClick = {}) {
+                    Icon(
+                        imageVector = Icons.Filled.FilterList,
+                        contentDescription = "More"
+                    )
+                }
+
+                if (query.isNotEmpty()) {
+                    IconButton(onClick = { onQueryChange("") }) {
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = "Clear"
+                        )
+                    }
+                }
             }
         },
         leadingIcon = {

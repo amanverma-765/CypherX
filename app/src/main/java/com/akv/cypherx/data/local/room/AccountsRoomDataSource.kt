@@ -14,23 +14,49 @@ class AccountsRoomDataSource(
 ) : AccountsLocalDataSource {
 
     override fun getAllAccounts(): Flow<ApiResponse<List<AccountEntity>>> {
-
         return flow {
             emit(ApiResponse.Loading)
             try {
-
                 accountsDao.getAllAccounts().collect { accounts ->
                     emit(ApiResponse.Success(accounts))
                 }
 
             } catch (e: SQLiteConstraintException) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             } catch (e: SQLiteException) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             }
+        }
+    }
 
+    override fun getAccountById(accountId: Int): Flow<ApiResponse<AccountEntity>> {
+        return flow {
+            emit(ApiResponse.Loading)
+            try {
+
+                accountsDao.getAccountById(accountId).collect { account ->
+                    if (account != null) {
+                        emit(ApiResponse.Success(account))
+                    } else {
+                        throw Exception("Account not found")
+                    }
+                }
+
+            } catch (e: SQLiteConstraintException) {
+                e.printStackTrace()
+                emit(ApiResponse.Error(e.message))
+            } catch (e: SQLiteException) {
+                e.printStackTrace()
+                emit(ApiResponse.Error(e.message))
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(ApiResponse.Error(e.message))
+            }
         }
     }
 
@@ -44,53 +70,61 @@ class AccountsRoomDataSource(
                 }
 
             } catch (e: SQLiteConstraintException) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             } catch (e: SQLiteException) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             }
 
         }
     }
 
-    override suspend fun addNewAccount(accountEntity: AccountEntity): Flow<ApiResponse<Unit>> {
+    override fun addNewAccount(accountEntity: AccountEntity): Flow<ApiResponse<Unit>> {
         return flow {
             emit(ApiResponse.Loading)
             try {
-
                 accountsDao.addNewAccount(accountEntity)
                 emit(ApiResponse.Success(Unit))
 
             } catch (e: SQLiteConstraintException) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             } catch (e: SQLiteException) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             }
         }
     }
 
-    override suspend fun deleteAccount(accountEntity: AccountEntity): Flow<ApiResponse<Unit>> {
+    override fun deleteAccount(accountId: Int): Flow<ApiResponse<Unit>> {
         return flow {
             emit(ApiResponse.Loading)
             try {
 
-                accountsDao.deleteAccount(accountEntity)
+                accountsDao.deleteAccount(accountId)
                 emit(ApiResponse.Success(Unit))
 
             } catch (e: SQLiteConstraintException) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             } catch (e: SQLiteException) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             }
         }
     }
 
-    override suspend fun updateAccount(accountEntity: AccountEntity): Flow<ApiResponse<Unit>> {
+    override fun updateAccount(accountEntity: AccountEntity): Flow<ApiResponse<Unit>> {
         return flow {
             emit(ApiResponse.Loading)
             try {
@@ -99,13 +133,15 @@ class AccountsRoomDataSource(
                 emit(ApiResponse.Success(Unit))
 
             } catch (e: SQLiteConstraintException) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             } catch (e: SQLiteException) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             } catch (e: Exception) {
+                e.printStackTrace()
                 emit(ApiResponse.Error(e.message))
             }
         }
     }
-
 }
