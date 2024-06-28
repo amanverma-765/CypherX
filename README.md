@@ -5,11 +5,11 @@
 
 <p align="center">
   <img src="https://github.com/amanverma-765/CypherX/assets/46085882/f51711c0-cc8b-4747-8674-a8a4a0a2f442" height="320"/>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/amanverma-765/CypherX/assets/46085882/5626d8ee-404a-485e-bd19-3df750a92a96" height="320"/>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/amanverma-765/CypherX/assets/46085882/c5d99d5d-15ed-43b3-928a-7a1cbc5ecf4e" height="320"/>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/amanverma-765/CypherX/assets/46085882/bb37018e-bfb9-49e3-8fc6-5e78188df9ee" height="320"/>
 </p>
 
