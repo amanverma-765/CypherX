@@ -117,13 +117,19 @@ fun ShowAccountDetailContent(
                 AccountDetailItem(
                     headlineText = response.data.accountUsername,
                     overLineText = "Username/Email",
-                    onCopyClicked = { clipboard.setText(AnnotatedString(response.data.accountUsername)) }
+                    onCopyClicked = {
+                        clipboard.setText(AnnotatedString(response.data.accountUsername))
+                        context.toast("Username copied to clipboard.", lengthShort = true)
+                    }
                 )
 
                 AccountDetailItem(
                     headlineText = "***********************",
                     overLineText = "Password",
-                    onCopyClicked = { clipboard.setText(AnnotatedString(response.data.accountPassword)) }
+                    onCopyClicked = {
+                        clipboard.setText(AnnotatedString(response.data.accountPassword))
+                        context.toast("Password copied to clipboard.", lengthShort = true)
+                    }
                 )
             }
 
