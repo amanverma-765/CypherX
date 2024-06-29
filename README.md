@@ -4,10 +4,13 @@
 </p><br>
 
 <p align="center">
-  <img src="https://github.com/amanverma-765/CypherX/assets/46085882/f51711c0-cc8b-4747-8674-a8a4a0a2f442" height="320"/>
-  <img src="https://github.com/amanverma-765/CypherX/assets/46085882/5626d8ee-404a-485e-bd19-3df750a92a96" height="320"/>
-  <img src="https://github.com/amanverma-765/CypherX/assets/46085882/c5d99d5d-15ed-43b3-928a-7a1cbc5ecf4e" height="320"/>
-  <img src="https://github.com/amanverma-765/CypherX/assets/46085882/bb37018e-bfb9-49e3-8fc6-5e78188df9ee" height="320"/>
+  <img src="https://github.com/amanverma-765/CypherX/assets/46085882/f51711c0-cc8b-4747-8674-a8a4a0a2f442" height="300"/>
+ &nbsp;&nbsp;&nbsp;
+ <img src="https://github.com/amanverma-765/CypherX/assets/46085882/5626d8ee-404a-485e-bd19-3df750a92a96" height="300"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://github.com/amanverma-765/CypherX/assets/46085882/c5d99d5d-15ed-43b3-928a-7a1cbc5ecf4e" height="300"/>
+&nbsp;&nbsp;&nbsp;
+<img src="https://github.com/amanverma-765/CypherX/assets/46085882/bb37018e-bfb9-49e3-8fc6-5e78188df9ee" height="300"/>
 </p>
 
 ## Functional Requirements
@@ -60,11 +63,11 @@
     - Download Android Studio from the official [Android Developer website](https://developer.android.com/studio).
     - Follow the installation instructions for your operating system.
 
-2. **Create a New Project**
+2. **Downloading this project**
     - Open Android Studio.
-    - Click on `Start a new Android Studio project`.
-    - Choose a project template (e.g., Empty Activity) and click `Next`.
-    - Configure your project (Name, Package name, Save location, Language, Minimum API level) and click `Finish`.
+    - Click on `Get from VCS`.
+    - Copy the url of this github repo.
+    - Place the url inside URL field and hit `Clone`.
 
 ### Running the App
 
