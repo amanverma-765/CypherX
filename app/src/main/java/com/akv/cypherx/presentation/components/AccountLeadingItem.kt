@@ -46,7 +46,7 @@ fun AccountLeadingItem(
 
             val isDarkMode = isSystemInDarkTheme()
             val firstChar = remember(title.isNotBlank()) { title }
-            val bgColor = remember { generateRandomColor(isDarkMode) }
+            val bgColor = remember(title.isNotBlank()) { generateRandomColor(isDarkMode) }
 
             Box(
                 contentAlignment = Alignment.Center,
@@ -55,13 +55,15 @@ fun AccountLeadingItem(
                     .clip(RoundedCornerShape(16.dp))
                     .background(bgColor)
             ) {
+
                 Text(
-                    text = firstChar[0].uppercase(),
+                    text = firstChar.ifBlank { " " }[0].uppercase(),
                     fontWeight = FontWeight.Bold,
                     style = textStyle,
                     textAlign = TextAlign.Center,
                     color = Color.White
                 )
+
             }
         }
     }
