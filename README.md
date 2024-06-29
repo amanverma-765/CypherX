@@ -31,8 +31,8 @@
 ## Bonus Features (Optional)
 
 - [x] **Security Feature**: When the user opens the app, prompt them to authenticate using biometric (e.g., fingerprint, face ID) or a PIN screen for added security.
-- [ ] **Password Strength Meter**: Provide a visual indicator of password strength to help users create strong passwords.
-- [ ] **Password Generation**: Provide a feature to generate strong, random passwords for new accounts.
+- [x] **Password Strength Meter**: Provide a visual indicator of password strength to help users create strong passwords.
+- [x] **Password Generation**: Provide a feature to generate strong, random passwords for new accounts.
 
 ## Tech Stack Used
 

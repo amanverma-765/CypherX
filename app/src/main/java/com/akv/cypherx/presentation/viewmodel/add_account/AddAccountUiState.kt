@@ -17,5 +17,9 @@ data class AddAccountUiState(
     val userNameError: String = "",
     val passwordError: String = "",
 
-    val isFormValidated: Boolean = false
+    val isPasswordValidated: Boolean = false,
+    val isUsernameValidated: Boolean = false,
+    val isAccountNameValidated: Boolean = false,
+
+    val passStrength: Pair<Float, String> = Pair(0f, "")
 )

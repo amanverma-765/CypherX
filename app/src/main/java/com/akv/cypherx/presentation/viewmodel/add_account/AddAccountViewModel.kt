@@ -1,15 +1,19 @@
 package com.akv.cypherx.presentation.viewmodel.add_account
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akv.cypherx.domain.model.AccountData
 import com.akv.cypherx.domain.usecase.AccountsDataUseCases
+import com.akv.cypherx.security.generatePassword
+import com.akv.cypherx.security.passwordStrength
 import com.akv.cypherx.utils.ApiResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.koin.core.KoinApplication.Companion.init
 
 
 class AddAccountViewModel(
@@ -23,29 +27,31 @@ class AddAccountViewModel(
 
     fun onEvent(event: AddAccountUiEvents) {
         when (event) {
-
+            is AddAccountUiEvents.OnAccountNameChange -> onAccountNameChange(event.text)
+            is AddAccountUiEvents.OnPasswordChange -> onPasswordChange(event.text)
+            is AddAccountUiEvents.OnUserNameChange -> onUserNameChange(event.text)
+            is AddAccountUiEvents.ValidateForm -> validateForm()
+            is AddAccountUiEvents.GenerateRandomPass -> generateRandomPass(event.length)
             is AddAccountUiEvents.AddNewAccount -> {
                 if (accountData.id == null)
                     addNewAccount()
                 else updateAccount()
             }
-
-            is AddAccountUiEvents.OnAccountNameChange -> onAccountNameChange(event.text)
-            is AddAccountUiEvents.OnPasswordChange -> onPasswordChange(event.text)
-            is AddAccountUiEvents.OnUserNameChange -> onUserNameChange(event.text)
-            is AddAccountUiEvents.ValidateForm -> validateForm()
         }
     }
 
     init {
-        _addAccountUiState.update { state ->
-            state.copy(
-                accountName = accountData.accountName,
-                password = accountData.accountPassword,
-                userName = accountData.accountUsername
-            )
+        if (accountData.id != null) {
+            _addAccountUiState.update { state ->
+                state.copy(
+                    accountName = accountData.accountName,
+                    password = accountData.accountPassword,
+                    userName = accountData.accountUsername
+                )
+            }
+            validateForm()
         }
-        if (accountData.id != null) validateForm()
+        calculatePassStrength()
     }
 
     private fun onAccountNameChange(text: String) {
@@ -55,16 +61,18 @@ class AddAccountViewModel(
                 accountNameError = ""
             )
         }
+        validateAccountName()
     }
 
     private fun onPasswordChange(text: String) {
-        validateForm()
         _addAccountUiState.update { state ->
             state.copy(
                 password = text,
                 passwordError = ""
             )
         }
+        validatePassword()
+        calculatePassStrength()
     }
 
     private fun onUserNameChange(text: String) {
@@ -74,6 +82,7 @@ class AddAccountViewModel(
                 userNameError = ""
             )
         }
+        validateUserName()
     }
 
     private fun validateUserName(): Boolean {
@@ -86,7 +95,8 @@ class AddAccountViewModel(
         }
         _addAccountUiState.update { state ->
             state.copy(
-                userNameError = errorMessage
+                userNameError = errorMessage,
+                isUsernameValidated = isValid
             )
         }
         return isValid
@@ -105,7 +115,8 @@ class AddAccountViewModel(
         }
         _addAccountUiState.update { state ->
             state.copy(
-                passwordError = errorMessage
+                passwordError = errorMessage,
+                isPasswordValidated = isValid
             )
         }
         return isValid
@@ -121,16 +132,19 @@ class AddAccountViewModel(
         }
         _addAccountUiState.update { state ->
             state.copy(
-                accountNameError = errorMessage
+                accountNameError = errorMessage,
+                isAccountNameValidated = isValid
             )
         }
         return isValid
     }
 
     private fun validateForm() {
-        _addAccountUiState.update { state ->
-            state.copy(isFormValidated = validateAccountName() && validateUserName() && validatePassword())
-        }
+
+        validateAccountName()
+        validateUserName()
+        validatePassword()
+
     }
 
     private fun addNewAccount() {
@@ -179,4 +193,27 @@ class AddAccountViewModel(
         }
     }
 
+    private fun generateRandomPass(length: Int) {
+        viewModelScope.launch {
+            val pass = generatePassword(length)
+            _addAccountUiState.update { state ->
+                state.copy(
+                    password = pass
+                )
+            }
+        }
+        calculatePassStrength()
+    }
+
+    private fun calculatePassStrength() {
+        viewModelScope.launch {
+            Log.e("TAG", "calculatePassStrength: ${addAccountUiState.value.password}")
+            val passStrength = passwordStrength(addAccountUiState.value.password)
+            _addAccountUiState.update { state ->
+                state.copy(
+                    passStrength = passStrength
+                )
+            }
+        }
+    }
 }

@@ -31,6 +31,7 @@ import cafe.adriel.voyager.navigator.bottomSheet.LocalBottomSheetNavigator
 import com.akv.cypherx.domain.model.AccountData
 import com.akv.cypherx.presentation.components.AccountLeadingItem
 import com.akv.cypherx.presentation.components.AccountTextField
+import com.akv.cypherx.presentation.components.PasswordFieldSupportingContent
 import com.akv.cypherx.presentation.viewmodel.add_account.AddAccountUiEvents
 import com.akv.cypherx.presentation.viewmodel.add_account.AddAccountUiState
 import com.akv.cypherx.presentation.viewmodel.add_account.AddAccountViewModel
@@ -86,7 +87,7 @@ private fun AddNewAccountContent(
     }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(2.dp),
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
@@ -136,7 +137,6 @@ private fun AddNewAccountContent(
             isError = uiState.passwordError.isNotEmpty(),
             label = "Password",
             isPassword = true,
-            supportingText = { Text(text = uiState.passwordError) },
             imeAction = ImeAction.Done,
             leadingIcon = {
                 Icon(
@@ -144,12 +144,20 @@ private fun AddNewAccountContent(
                     contentDescription = "Password"
                 )
             },
+            supportingText = {
+                PasswordFieldSupportingContent(
+                    errorText = uiState.passwordError,
+                    passStrength = uiState.passStrength,
+                    generatePassword = { uiEvents(AddAccountUiEvents.GenerateRandomPass(it)) },
+                )
+            },
         )
 
+        // Save Button
         Button(
             onClick = {
                 uiEvents(AddAccountUiEvents.ValidateForm)
-                if (uiState.isFormValidated) {
+                if (uiState.isAccountNameValidated && uiState.isPasswordValidated && uiState.isUsernameValidated) {
                     uiEvents(AddAccountUiEvents.AddNewAccount)
                 }
             },

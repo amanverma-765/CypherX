@@ -24,7 +24,7 @@ fun AccountDetailItem(
         overlineContent = {
             Text(
                 text = overLineText,
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.alpha(.5f)
             )
         },

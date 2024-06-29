@@ -9,4 +9,6 @@ sealed class AddAccountUiEvents {
     data class OnPasswordChange(val text: String) : AddAccountUiEvents()
 
     data object ValidateForm : AddAccountUiEvents()
+
+    data class GenerateRandomPass(val length: Int) : AddAccountUiEvents()
 }
