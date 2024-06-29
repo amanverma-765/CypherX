@@ -30,6 +30,7 @@ fun AccountLeadingItem(
     textStyle: TextStyle = MaterialTheme.typography.titleLarge,
     title: String
 ) {
+    val firstChar = if (title.isNotBlank()) title.trim()[0].uppercase() else ""
 
     Box(
         modifier = modifier
@@ -37,16 +38,13 @@ fun AccountLeadingItem(
             .clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.surfaceContainerHighest)
     ) {
-
         AnimatedVisibility(
-            visible = title.isNotBlank(),
+            visible = firstChar.isNotEmpty(),
             exit = slideOutVertically { it },
             enter = slideInVertically { it }
         ) {
-
             val isDarkMode = isSystemInDarkTheme()
-            val firstChar = remember(title.isNotBlank()) { title }
-            val bgColor = remember(title.isNotBlank()) { generateRandomColor(isDarkMode) }
+            val bgColor = remember(firstChar) { generateRandomColor(isDarkMode) }
 
             Box(
                 contentAlignment = Alignment.Center,
@@ -55,15 +53,13 @@ fun AccountLeadingItem(
                     .clip(RoundedCornerShape(16.dp))
                     .background(bgColor)
             ) {
-
                 Text(
-                    text = firstChar.ifBlank { " " }[0].uppercase(),
+                    text = firstChar,
                     fontWeight = FontWeight.Bold,
                     style = textStyle,
                     textAlign = TextAlign.Center,
-                    color = Color.White
+                    color = if (isDarkMode) Color.White.copy(.8f) else Color.Black.copy(.5f)
                 )
-
             }
         }
     }
