@@ -1,6 +1,5 @@
 package com.akv.cypherx.presentation.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,14 +22,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.bottomSheet.BottomSheetNavigator
 import cafe.adriel.voyager.navigator.bottomSheet.LocalBottomSheetNavigator
-import com.akv.cypherx.R
 import com.akv.cypherx.domain.model.AccountData
+import com.akv.cypherx.presentation.components.AccountLeadingItem
 import com.akv.cypherx.presentation.components.AccountTextField
 import com.akv.cypherx.presentation.viewmodel.add_account.AddAccountUiEvents
 import com.akv.cypherx.presentation.viewmodel.add_account.AddAccountUiState
@@ -110,12 +109,11 @@ private fun AddNewAccountContent(
             label = "Account Name",
             supportingText = { Text(text = uiState.accountNameError) },
             leadingIcon = {
-                Image(
-                    painter = painterResource(id = R.drawable.snapchat_logo_svgrepo_com),
-                    contentDescription = "Google",
-                    modifier = Modifier.size(30.dp)
+                AccountLeadingItem(
+                    modifier = Modifier.size(30.dp),
+                    title = uiState.accountName
                 )
-            },
+            }
         )
 
         AccountTextField(
@@ -139,6 +137,7 @@ private fun AddNewAccountContent(
             label = "Password",
             isPassword = true,
             supportingText = { Text(text = uiState.passwordError) },
+            imeAction = ImeAction.Done,
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Password,
