@@ -17,6 +17,7 @@ import com.akv.cypherx.domain.usecase.accounts.UpdateAccount
 import com.akv.cypherx.presentation.viewmodel.account_list.AccountListViewModel
 import com.akv.cypherx.presentation.viewmodel.add_account.AddAccountViewModel
 import com.akv.cypherx.presentation.viewmodel.show_account.ShowAccountViewModel
+import com.akv.cypherx.security.CryptoManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -62,15 +63,19 @@ val mainAppModule = module {
     viewModel {
         AddAccountViewModel(
             accountsDataUseCases = get(),
-            accountData = get()
+            accountData = get(),
+            cryptoManager = get()
         )
     }
 
     viewModel {
         ShowAccountViewModel(
             accountsDataUseCases = get(),
-            accountId = get()
+            accountId = get(),
+            cryptoManager = get()
         )
     }
+
+    single { CryptoManager() }
 
 }

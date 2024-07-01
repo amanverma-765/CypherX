@@ -22,7 +22,7 @@
 
 ## Technical Requirements 
 
-- [ ] **Encryption**: Implement strong encryption algorithms (e.g., AES, RSA) to secure password data.
+- [x] **Encryption**: Implement strong encryption algorithms (e.g., AES, RSA) to secure password data.
 - [x] **Database**: Use a secure database (e.g., SQLite, Room) to manage encrypted passwords locally on the device.
 - [x] **User Interface**: Design a clean and intuitive user interface for managing passwords.
 - [x] **Input Validation**: Implement validation to ensure that mandatory fields are not empty.

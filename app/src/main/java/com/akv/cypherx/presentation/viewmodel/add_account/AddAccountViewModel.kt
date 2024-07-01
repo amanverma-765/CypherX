@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akv.cypherx.domain.model.AccountData
 import com.akv.cypherx.domain.usecase.AccountsDataUseCases
+import com.akv.cypherx.security.CryptoManager
 import com.akv.cypherx.security.generatePassword
 import com.akv.cypherx.security.passwordStrength
 import com.akv.cypherx.utils.ApiResponse
@@ -18,7 +19,8 @@ import org.koin.core.KoinApplication.Companion.init
 
 class AddAccountViewModel(
     private val accountsDataUseCases: AccountsDataUseCases,
-    private val accountData: AccountData
+    private val accountData: AccountData,
+    private val cryptoManager: CryptoManager
 ) : ViewModel() {
 
 
@@ -140,11 +142,9 @@ class AddAccountViewModel(
     }
 
     private fun validateForm() {
-
         validateAccountName()
         validateUserName()
         validatePassword()
-
     }
 
     private fun addNewAccount() {
@@ -154,7 +154,7 @@ class AddAccountViewModel(
                     AccountData(
                         accountName = addAccountUiState.value.accountName,
                         accountUsername = addAccountUiState.value.userName,
-                        accountPassword = addAccountUiState.value.password,
+                        accountPassword = cryptoManager.encrypt(addAccountUiState.value.password),
                     )
                 )
             responseHandler(apiResponse)
@@ -169,7 +169,7 @@ class AddAccountViewModel(
                         id = accountData.id,
                         accountName = addAccountUiState.value.accountName,
                         accountUsername = addAccountUiState.value.userName,
-                        accountPassword = addAccountUiState.value.password,
+                        accountPassword = cryptoManager.encrypt(addAccountUiState.value.password),
                     )
                 )
             responseHandler(apiResponse)
@@ -181,12 +181,7 @@ class AddAccountViewModel(
             apiResponse.collect { response ->
                 _addAccountUiState.update { state ->
                     state.copy(
-                        addNewAccountResponse = when (response) {
-                            is ApiResponse.Error -> ApiResponse.Error(response.message)
-                            is ApiResponse.Loading -> ApiResponse.Loading
-                            is ApiResponse.Success -> ApiResponse.Success(response.data)
-                            is ApiResponse.IDLE -> ApiResponse.IDLE
-                        }
+                        addNewAccountResponse = response
                     )
                 }
             }

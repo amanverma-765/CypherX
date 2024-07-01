@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akv.cypherx.domain.usecase.AccountsDataUseCases
+import com.akv.cypherx.security.CryptoManager
 import com.akv.cypherx.utils.ApiResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,7 +13,8 @@ import kotlinx.coroutines.launch
 
 class ShowAccountViewModel(
     private val accountsDataUseCases: AccountsDataUseCases,
-    private val accountId: Int
+    private val accountId: Int,
+    private val cryptoManager: CryptoManager
 ) : ViewModel() {
 
     private val _showAccountUiState = MutableStateFlow(ShowAccountUiState())
@@ -41,8 +43,12 @@ class ShowAccountViewModel(
                             getAccountByIdResponse = when (response) {
                                 is ApiResponse.Error -> ApiResponse.Error(response.message)
                                 is ApiResponse.Loading -> ApiResponse.Loading
-                                is ApiResponse.Success -> ApiResponse.Success(response.data)
-                                ApiResponse.IDLE -> ApiResponse.IDLE
+                                is ApiResponse.IDLE -> ApiResponse.IDLE
+                                is ApiResponse.Success -> ApiResponse.Success(
+                                    response.data.copy(
+                                        accountPassword = cryptoManager.decrypt(response.data.accountPassword)
+                                    )
+                                )
                             }
                         )
                     }
@@ -58,12 +64,7 @@ class ShowAccountViewModel(
                 .collect { response ->
                     _showAccountUiState.update { state ->
                         state.copy(
-                            deleteAccountByIdResponse = when (response) {
-                                is ApiResponse.Error -> ApiResponse.Error(response.message)
-                                is ApiResponse.Loading -> ApiResponse.Loading
-                                is ApiResponse.Success -> ApiResponse.Success(response.data)
-                                ApiResponse.IDLE -> ApiResponse.IDLE
-                            }
+                            deleteAccountByIdResponse = response
                         )
                     }
                 }
