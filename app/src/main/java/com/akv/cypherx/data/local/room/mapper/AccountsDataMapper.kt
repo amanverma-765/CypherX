@@ -10,7 +10,8 @@ object AccountsDataMapper {
             id = id,
             accountName = accountName,
             accountUsername = accountUsername,
-            accountPassword = accountPassword
+            accountPassword = accountPassword,
+            websiteUrl = websiteUrl
         )
     }
 
@@ -19,7 +20,8 @@ object AccountsDataMapper {
             id = id ?: 0,
             accountName = accountName,
             accountUsername = accountUsername,
-            accountPassword = accountPassword
+            accountPassword = accountPassword,
+            websiteUrl = websiteUrl
         )
     }
 }

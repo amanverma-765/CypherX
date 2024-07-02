@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akv.cypherx.domain.model.AccountData
 import com.akv.cypherx.domain.usecase.AccountsDataUseCases
+import com.akv.cypherx.domain.usecase.GoogleScraperUseCases
 import com.akv.cypherx.utils.ApiResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AccountListViewModel(
-    private val accountsDataUseCases: AccountsDataUseCases
+    private val accountsDataUseCases: AccountsDataUseCases,
 ) : ViewModel() {
 
     private val _accountListUiState = MutableStateFlow(AccountListUiState())
@@ -65,16 +66,10 @@ class AccountListViewModel(
             apiResponse.collect { response ->
                 _accountListUiState.update { state ->
                     state.copy(
-                        getAllDataResponse = when (response) {
-                            is ApiResponse.Error -> ApiResponse.Error(response.message)
-                            is ApiResponse.Loading -> ApiResponse.Loading
-                            is ApiResponse.Success -> ApiResponse.Success(response.data)
-                            is ApiResponse.IDLE -> ApiResponse.IDLE
-                        }
+                        getAllDataResponse = response
                     )
                 }
             }
         }
     }
-
 }

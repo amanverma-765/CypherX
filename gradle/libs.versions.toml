@@ -5,7 +5,7 @@ coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.2"
+lifecycleRuntimeKtx = "2.8.3"
 activityCompose = "1.9.0"
 composeBom = "2024.06.00"
 # Added
@@ -17,6 +17,12 @@ ksp = "2.0.0-1.0.22"
 roomRuntime = "2.6.1"
 voyagerBottomSheetNavigator = "1.1.0-beta02"
 biometricKtx = "1.1.0"
+jsoup = "1.17.2"
+coilCompose = "2.6.0"
+imageLoader = "1.8.1"
+
+
+
 
 
 [libraries]
@@ -48,7 +54,9 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRunt
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 voyager-bottom-sheet-navigator = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyagerBottomSheetNavigator" }
 androidx-biometric-ktx = { module = "androidx.biometric:biometric", version.ref = "biometricKtx" }
-
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+image-loader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "imageLoader" }
 
 
 [plugins]

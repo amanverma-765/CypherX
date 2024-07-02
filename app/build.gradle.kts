@@ -93,4 +93,7 @@ dependencies {
     implementation(libs.voyager.bottom.sheet.navigator)
     implementation(libs.androidx.biometric.ktx)
 
+    implementation(libs.jsoup)
+    implementation(libs.coil.compose)
+    api(libs.image.loader)
 }

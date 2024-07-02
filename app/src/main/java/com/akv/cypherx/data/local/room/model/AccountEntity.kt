@@ -22,6 +22,9 @@ data class AccountEntity(
     val accountUsername: String,
 
     @SerialName("account_password")
-    val accountPassword: String
+    val accountPassword: String,
+
+    @SerialName("website_url")
+    val websiteUrl: String?
 
 )

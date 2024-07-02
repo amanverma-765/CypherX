@@ -1,5 +1,6 @@
 package com.akv.cypherx.presentation.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -24,8 +25,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.akv.cypherx.R
 import com.akv.cypherx.domain.model.AccountData
+import com.akv.cypherx.utils.Constants.LOGO_FETCH_URL
 
 @Composable
 fun AccountCard(
@@ -48,6 +51,7 @@ fun AccountCard(
                 ) {
                     AccountLeadingItem(
                         title = accountData.accountName,
+                        websiteUrl = accountData.websiteUrl,
                         textStyle = MaterialTheme.typography.headlineLarge,
                         modifier = Modifier.size(50.dp)
                     )

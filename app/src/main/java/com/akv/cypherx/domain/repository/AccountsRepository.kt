@@ -14,4 +14,6 @@ interface AccountsRepository {
     fun deleteAccount(accountId: Int): Flow<ApiResponse<Unit>>
     fun updateAccount(accountData: AccountData): Flow<ApiResponse<Unit>>
 
+    fun getWebsiteName(searchName: String): Flow<ApiResponse<String>>
+
 }

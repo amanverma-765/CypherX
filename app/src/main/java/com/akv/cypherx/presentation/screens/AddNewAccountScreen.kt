@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Password
 import androidx.compose.material.icons.filled.Person2
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,6 +21,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -66,6 +70,21 @@ private fun AddNewAccountContent(
 ) {
 
     val context = LocalContext.current
+    var saveButtonLoading by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = uiState.getWebsiteNameResponse) {
+        when (val response = uiState.getWebsiteNameResponse) {
+            is ApiResponse.Error -> {
+                context.toast("Cant get website url: ${response.message}")
+            }
+
+            is ApiResponse.IDLE -> saveButtonLoading = false
+            is ApiResponse.Loading -> saveButtonLoading = true
+            is ApiResponse.Success -> {
+                context.toast("Website url saved...")
+            }
+        }
+    }
 
     LaunchedEffect(key1 = uiState.addNewAccountResponse) {
         when (val response = uiState.addNewAccountResponse) {
@@ -112,7 +131,8 @@ private fun AddNewAccountContent(
             leadingIcon = {
                 AccountLeadingItem(
                     modifier = Modifier.size(30.dp),
-                    title = uiState.accountName
+                    title = uiState.accountName,
+                    websiteUrl = uiState.websiteUrl
                 )
             }
         )
@@ -164,7 +184,8 @@ private fun AddNewAccountContent(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Text(text = "Save Account")
+            if (saveButtonLoading) CircularProgressIndicator()
+            else Text(text = "Save Account")
         }
     }
 }

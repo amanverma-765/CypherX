@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akv.cypherx.domain.model.AccountData
 import com.akv.cypherx.domain.usecase.AccountsDataUseCases
+import com.akv.cypherx.domain.usecase.GoogleScraperUseCases
+import com.akv.cypherx.domain.usecase.google.GetWebsiteName
 import com.akv.cypherx.security.CryptoManager
 import com.akv.cypherx.security.generatePassword
 import com.akv.cypherx.security.passwordStrength
@@ -14,13 +16,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.builtins.UIntArraySerializer
 import org.koin.core.KoinApplication.Companion.init
 
 
 class AddAccountViewModel(
     private val accountsDataUseCases: AccountsDataUseCases,
     private val accountData: AccountData,
-    private val cryptoManager: CryptoManager
+    private val cryptoManager: CryptoManager,
+    private val googleScraperUseCases: GoogleScraperUseCases
 ) : ViewModel() {
 
 
@@ -34,11 +38,7 @@ class AddAccountViewModel(
             is AddAccountUiEvents.OnUserNameChange -> onUserNameChange(event.text)
             is AddAccountUiEvents.ValidateForm -> validateForm()
             is AddAccountUiEvents.GenerateRandomPass -> generateRandomPass(event.length)
-            is AddAccountUiEvents.AddNewAccount -> {
-                if (accountData.id == null)
-                    addNewAccount()
-                else updateAccount()
-            }
+            is AddAccountUiEvents.AddNewAccount -> getWebsiteName()
         }
     }
 
@@ -48,7 +48,8 @@ class AddAccountViewModel(
                 state.copy(
                     accountName = accountData.accountName,
                     password = accountData.accountPassword,
-                    userName = accountData.accountUsername
+                    userName = accountData.accountUsername,
+                    websiteUrl = accountData.websiteUrl
                 )
             }
             validateForm()
@@ -147,11 +148,13 @@ class AddAccountViewModel(
         validatePassword()
     }
 
-    private fun addNewAccount() {
+    private fun addNewAccount(websiteName: String? = null) {
+        Log.e("TAG", "addNewAccount: ")
         viewModelScope.launch {
             val apiResponse = accountsDataUseCases
                 .addNewAccount(
                     AccountData(
+                        websiteUrl = websiteName,
                         accountName = addAccountUiState.value.accountName,
                         accountUsername = addAccountUiState.value.userName,
                         accountPassword = cryptoManager.encrypt(addAccountUiState.value.password),
@@ -161,12 +164,13 @@ class AddAccountViewModel(
         }
     }
 
-    private fun updateAccount() {
+    private fun updateAccount(websiteName: String? = null) {
         viewModelScope.launch {
             val apiResponse = accountsDataUseCases
                 .updateAccount(
                     AccountData(
                         id = accountData.id,
+                        websiteUrl = websiteName,
                         accountName = addAccountUiState.value.accountName,
                         accountUsername = addAccountUiState.value.userName,
                         accountPassword = cryptoManager.encrypt(addAccountUiState.value.password),
@@ -210,6 +214,39 @@ class AddAccountViewModel(
                     passStrength = passStrength
                 )
             }
+        }
+    }
+
+    private fun getWebsiteName() {
+        viewModelScope.launch {
+            googleScraperUseCases.getWebsiteName(addAccountUiState.value.accountName)
+                .collect { response ->
+                    when (response) {
+                        is ApiResponse.Error -> {
+                            if (accountData.id == null)
+                                addNewAccount()
+                            else updateAccount()
+                            _addAccountUiState.update { state ->
+                                state.copy(
+                                    getWebsiteNameResponse = ApiResponse.Error(response.message)
+                                )
+                            }
+                        }
+
+                        is ApiResponse.IDLE -> ApiResponse.IDLE
+                        is ApiResponse.Loading -> ApiResponse.Loading
+                        is ApiResponse.Success -> {
+                            if (accountData.id == null)
+                                addNewAccount(response.data)
+                            else updateAccount(response.data)
+                            _addAccountUiState.update { state ->
+                                state.copy(
+                                    getWebsiteNameResponse = ApiResponse.Success(Unit)
+                                )
+                            }
+                        }
+                    }
+                }
         }
     }
 }
