@@ -48,6 +48,9 @@
   - Repository Pattern: Acts as a mediator between different data sources and the application's business logic.
 - [Kotlinx-Serialization](https://github.com/Kotlin/kotlinx.serialization): A modern JSON parsing library.
 - [Voyager](https://voyager.adriel.cafe/): A modern and robust navigation library.
+- Room-DB: Persistence library in Android Jetpack that simplifies the process of working with SQLite databases. 
+- [Coil](https://coil-kt.github.io/coil/): An image loading library for Android backed by Kotlin Coroutines.
+- [Jsoup](https://jsoup.org/): Java library that simplifies working with real-world HTML and XML.
 
 ## Compiling and Running an App from Android Studio
 
