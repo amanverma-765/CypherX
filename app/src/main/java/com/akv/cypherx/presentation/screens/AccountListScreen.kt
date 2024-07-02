@@ -125,7 +125,7 @@ private fun AccountListContent(
                 }
 
                 is ApiResponse.Success -> {
-                    items(response.data) { data ->
+                    items(response.data.asReversed()) { data ->
                         AccountCard(
                             accountData = data,
                             navigateToAccountDetail = navigateToAccountDetail,
