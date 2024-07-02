@@ -41,14 +41,12 @@ class ShowAccountViewModel(
                     _showAccountUiState.update { state ->
                         state.copy(
                             getAccountByIdResponse = when (response) {
-                                is ApiResponse.Error -> ApiResponse.Error(response.message)
-                                is ApiResponse.Loading -> ApiResponse.Loading
-                                is ApiResponse.IDLE -> ApiResponse.IDLE
                                 is ApiResponse.Success -> ApiResponse.Success(
                                     response.data.copy(
                                         accountPassword = cryptoManager.decrypt(response.data.accountPassword)
                                     )
                                 )
+                                else -> response
                             }
                         )
                     }
