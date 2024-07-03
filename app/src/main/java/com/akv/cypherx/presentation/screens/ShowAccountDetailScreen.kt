@@ -91,7 +91,7 @@ fun ShowAccountDetailContent(
     }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(24.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp),
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
@@ -119,6 +119,17 @@ fun ShowAccountDetailContent(
                     headlineText = response.data.accountName,
                     overLineText = "Account Type",
                 )
+
+                response.data.websiteUrl?.let { url ->
+                    AccountDetailItem(
+                        headlineText = url,
+                        overLineText = "Website Url",
+                        onCopyClicked = {
+                            clipboard.setText(AnnotatedString(url))
+                            context.toast("Website copied to clipboard.", lengthShort = true)
+                        }
+                    )
+                }
 
                 AccountDetailItem(
                     headlineText = response.data.accountUsername,

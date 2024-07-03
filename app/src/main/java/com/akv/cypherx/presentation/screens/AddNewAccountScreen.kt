@@ -106,7 +106,7 @@ private fun AddNewAccountContent(
     }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(2.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
