@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
             CypherXTheme {
                 KoinAndroidContext {
 
+                    // Random changes
+
                     var isAuthenticated by remember { mutableStateOf(false) }
 
                     if (isAuthenticated) {
